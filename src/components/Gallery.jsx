@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
-import { Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import { PizzasContext } from '../context/DataPizza';
+import React, { useContext } from 'react'
+import { Button } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
+import { PizzasContext } from '../context/DataPizza'
 
 const Gallery = () => {
     const { pizzas, addToCart } = useContext(PizzasContext);

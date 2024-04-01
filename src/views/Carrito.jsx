@@ -1,23 +1,8 @@
-import { useContext, useState } from 'react';
-import { PizzasContext } from '../context/DataPizza';
+import { useContext } from 'react'
+import { PizzasContext } from '../context/DataPizza'
 
-const carrito = () => {
-  const { pizzas } = useContext(PizzasContext);
-  const [cart, setCart] = useState([]);
-
-  const addToCart = (pizza) => {
-    setCart([...cart, pizza]);
-  }
-
-  const removeFromCart = (index) => {
-    const updatedCart = [...cart];
-    updatedCart.splice(index, 1);
-    setCart(updatedCart);
-  };
-
-  const calculateTotal = () => {
-    return cart.reduce((total, pizza) => total + pizza.price, 0);
-  };
+const Carrito = () => {
+  const { pizzas, cart, addToCart, removeFromCart, sumaTotal } = useContext(PizzasContext);
 
   return (
     <div>
@@ -30,7 +15,7 @@ const carrito = () => {
           </li>
         ))}
       </ul>
-      <p>Total: ${calculateTotal()}</p>
+      <p>Total: ${sumaTotal()}</p>
       <hr />
       <h3>Productos Disponibles</h3>
       <ul>
@@ -42,7 +27,8 @@ const carrito = () => {
         ))}
       </ul>
     </div>
-  );
-};
+  )
+}
 
-export default carrito;
+export default Carrito
+

@@ -1,34 +1,25 @@
-import { useContext } from 'react'
-import { PizzasContext } from '../context/DataPizza'
+import React, { useContext } from 'react';
+import { PizzasContext } from '../context/DataPizza';
 
 const Carrito = () => {
-  const { pizzas, cart, addToCart, removeFromCart, sumaTotal } = useContext(PizzasContext);
+  const { pizzas, cart, removeFromCart, sumaTotal, cuenta, aumentar, disminuir } = useContext(PizzasContext);
 
   return (
     <div>
       <h2>Carrito de Compras</h2>
       <ul>
-        {cart.map((pizza, index) => (
-          <li key={index}>
-            {pizza.name} - ${pizza.price}
-            <button onClick={() => removeFromCart(index)}>Eliminar</button>
+        {cart.map((pizza) => (
+          <li key={pizza.id}>
+            {pizza.name} - ${pizza.price} (Cantidad: {cuenta})
+            <button onClick={disminuir}>-</button>
+            <button onClick={aumentar}>+</button>
+            <button onClick={() => removeFromCart(pizza.id)}>Eliminar</button>
           </li>
         ))}
       </ul>
       <p>Total: ${sumaTotal()}</p>
-      <hr />
-      <h3>Productos Disponibles</h3>
-      <ul>
-        {pizzas.map((pizza) => (
-          <li key={pizza.id}>
-            {pizza.name} - ${pizza.price}
-            <button onClick={() => addToCart(pizza)}>Agregar al Carrito</button>
-          </li>
-        ))}
-      </ul>
     </div>
-  )
-}
+  );
+};
 
-export default Carrito
-
+export default Carrito;

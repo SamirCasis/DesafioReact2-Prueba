@@ -5,6 +5,7 @@ export const PizzasContext = createContext()
 const PizzasProvider = ({ children }) => {
   const [pizzas, setPizzas] = useState([])
   const [cart, setCart] = useState([])
+  const [cuenta, setCuenta] = useState(0)
 
   const url = './pizzas.json'
 
@@ -25,14 +26,25 @@ const PizzasProvider = ({ children }) => {
     setCart([...cart, pizza])
   }
 
-  const removeFromCart = (index) => {
-    const updatedCart = [...cart]
-    updatedCart.splice(index, 1)
+  const removeFromCart = (id) => {
+    const updatedCart = cart.filter(pizza => pizza.id !== id)
     setCart(updatedCart)
   }
 
   const sumaTotal = () => {
-    return cart.reduce((total, pizza) => total + pizza.price, 0);
+    return cart.reduce((total, pizza) => total + pizza.price, 0)
+  }
+
+  const aumentar = () => {
+    setCuenta(cuenta + 1)
+  }
+
+  const disminuir = () => {
+    setCuenta(cuenta - 1)
+  }
+
+  const goToPizzaDetails = (id) => {
+    navigate(`/pizza/${id}`)
   }
 
   useEffect(() => {
@@ -40,11 +52,10 @@ const PizzasProvider = ({ children }) => {
   }, [])
 
   return (
-    <PizzasContext.Provider value={{ pizzas, cart, addToCart, removeFromCart, sumaTotal }}>
+    <PizzasContext.Provider value={{ pizzas, cart, addToCart, removeFromCart, sumaTotal, cuenta, aumentar, disminuir, goToPizzaDetails }}>
       {children}
     </PizzasContext.Provider>
   )
 }
 
 export default PizzasProvider
-

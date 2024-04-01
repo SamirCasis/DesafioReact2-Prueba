@@ -1,0 +1,40 @@
+.navLink {
+    text-decoration: none;
+}
+
+.imagenNF {
+    text-align: center;
+}
+
+.imagenNF img {
+    width: 50%;
+    margin-top: 20px;
+}
+
+.banner {
+    text-align: center;
+    background-color: blue;
+    padding: 30px;
+    color: white;
+}
+
+main {
+    margin-top: 20px;
+}
+
+.gallery {
+    display:flex;
+    flex-wrap:wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.btnCardPizza {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.imgCardGallery {
+    width: 50%;
+}

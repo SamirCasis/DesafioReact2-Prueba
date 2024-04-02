@@ -1,27 +1,31 @@
 import React, { createContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 export const PizzasContext = createContext()
 
 const PizzasProvider = ({ children }) => {
   const [pizzas, setPizzas] = useState([])
-  const [selectedPizza, setSelectedPizza] = useState(null)
+  const [selectedPizza, setSelectedPizza] = useState([])
   const [cart, setCart] = useState([])
   const url = './pizzas.json'
   const navigate = useNavigate()
 
-  const getPizzas = async () => {
-    try {
-      const response = await fetch(url)
-      if (!response.ok) {
-        throw new Error("No se puede cargar la información de las pizzas")
+  useEffect(() => {
+    const getPizzas = async () => {
+      try {
+        const response = await fetch(url)
+        if (!response.ok) {
+          throw new Error("No se puede cargar la información de las pizzas")
+        }
+        const data = await response.json()
+        setPizzas(data)
+      } catch (error) {
+        console.log(error.message)
       }
-      const data = await response.json()
-      setPizzas(data)
-    } catch (error) {
-      console.log(error.message)
     }
-  }
+    getPizzas()
+  }, [])
 
   const pizzaHandle = (pizza) => {
     setSelectedPizza(pizza)
@@ -33,11 +37,13 @@ const PizzasProvider = ({ children }) => {
 
   const agregarCarrito = (pizza) => {
     setCart([...cart, pizza])
-  }
-
-  const handleAddToCart = (pizza) => {
-    agregarCarrito(pizza)
-    alert('Pizza agregada al carrito')
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "🍕 Agregaste una Pizza",
+      showConfirmButton: false,
+      timer: 1000
+    })
   }
 
   const eliminarCarrito = (id) => {
@@ -74,12 +80,8 @@ const PizzasProvider = ({ children }) => {
     setCart(updatedCart)
   }
 
-  useEffect(() => {
-    getPizzas()
-  }, [])
-
   return (
-    <PizzasContext.Provider value={{ pizzas, cart, agregarCarrito, eliminarCarrito, aumentarPrecio, disminuirPrecio, sumaTotal, pizzaHandle, handleAddToCart, irAlDetalle, selectedPizza }}>
+    <PizzasContext.Provider value={{ pizzas, cart, agregarCarrito, eliminarCarrito, aumentarPrecio, disminuirPrecio, sumaTotal, pizzaHandle, irAlDetalle, selectedPizza }}>
       {children}
     </PizzasContext.Provider>
   )

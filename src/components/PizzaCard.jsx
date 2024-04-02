@@ -1,42 +1,51 @@
-import React, { useContext } from 'react'
-import { PizzasContext } from '../context/DataPizza'
-import { useParams } from 'react-router-dom'
-import { Button } from 'react-bootstrap'
+import React, { useContext } from "react"
+import { PizzasContext } from "../context/DataPizza"
+import { useParams } from "react-router-dom"
+import { Button } from "react-bootstrap"
 
 const PizzaCard = () => {
-  const { selectedPizza } = useContext(PizzasContext)
-  const { name } = useParams()
+  const { selectedPizza, agregarCarrito } = useContext(PizzasContext)
+  const { id } = useParams()
 
   if (!selectedPizza) {
     return <div>No se encontró la pizza seleccionada</div>
   }
 
   return (
-    <div className='gallery'>
-      {selectedPizza.map((pizza) => (
-        <div key={pizza.id} className='pizzaCard'>
-          <img className='imgCardGallery' src={selectedPizza.img} alt={selectedPizza.name}></img>
-          <section>
-            <h3>{pizza.name}</h3>
-          </section>
-          <section className='ingredientes'>
-            <h5>Ingredientes:</h5>
+    <>
+      <article>
+        <h2>Detalles de la Pizza</h2>
+      </article>
+      <section>
+        <ul>
+          <li key={id}>
+            <strong>Nombre: {selectedPizza.name}</strong>,{" "}
+            <strong>Precio:</strong> ${selectedPizza.price}
+          </li>
+          <li>
+            <strong>Descripción:</strong> {selectedPizza.desc}
+          </li>
+          <li>
+            <h4>Ingredientes:</h4>
             <ul>
-              {pizza.ingredients.map((ingredient, id) => (
-                <li key={id} type='none'>🍕{ingredient}</li>
+              {selectedPizza.ingredients?.map((ingredient, id) => (
+                <li key={id}>{ingredient}</li>
               ))}
             </ul>
-          </section>
-          <h5 className='text-center'>${pizza.price}</h5>
-          <article className='btnCardPizza'>
-            <Button className='verMas bg-primary white' onClick={() => irAlDetalle(pizza.id)}>Ver Más 👀</Button>
-            <Button className='agregarCarrito bg-danger white' onClick={() => handleAddToCart(pizza)}> Añadir 🛒</Button>
-          </article>
-        </div>
-      ))}
-    </div>
+          </li>
+        </ul>
+      </section>
+      <article>
+        <Button
+          className="agregarCarrito bg-danger white"
+          onClick={() => agregarCarrito(selectedPizza)}
+        >
+          {" "}
+          Añadir 🛒
+        </Button>
+      </article>
+    </>
   )
 }
 
 export default PizzaCard
-

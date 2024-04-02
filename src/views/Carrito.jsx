@@ -1,10 +1,14 @@
-import React, { useContext } from 'react';
-import { PizzasContext } from '../context/DataPizza';
+import React, { useContext } from 'react'
+import { PizzasContext } from '../context/DataPizza'
+import { Button } from 'react-bootstrap'
 import './Carrito.css'
-import { Button } from 'react-bootstrap';
 
 const Carrito = () => {
-  const { pizzas, cart, eliminarCarrito, sumaTotal, cuenta, aumentar, disminuir } = useContext(PizzasContext);
+  const { cart, eliminarCarrito, sumaTotal, aumentarPrecio, disminuirPrecio } = useContext(PizzasContext)
+
+  const getCantidad = (id) => {
+    return cart.filter(pizza => pizza.id === id).length
+  }
 
   return (
     <div>
@@ -13,17 +17,21 @@ const Carrito = () => {
       </article>
       <section className='carritoDetalle'>
         <ul>
-          {cart.map((pizza) => (
-            <li type='none' key={pizza.id}>
-              <img src={pizza.img} />
-              {pizza.name}
-              - ${pizza.price}
-              <button onClick={disminuir}>-</button>
-              <button onClick={aumentar}>+</button>
-              (Cantidad: {cuenta})
-              <button onClick={() => eliminarCarrito(pizza.id)}>Eliminar Total</button>
-            </li>
-          ))}
+          {[...new Set(cart.map(pizza => pizza.id))].map((id) => {
+            const pizza = cart.find(p => p.id === id)
+            const cantidad = getCantidad(id)
+
+            return (
+              <li key={id} type='none'>
+                <img src={pizza.img} alt={pizza.name} />
+                {pizza.name} - ${pizza.price}
+                <button onClick={() => disminuirPrecio(id)}>-</button>
+                <span>Cantidad: {cantidad}</span>
+                <button onClick={() => aumentarPrecio(id)}>+</button>
+                <button onClick={() => eliminarCarrito(id)}>Eliminar Total</button>
+              </li>
+            )
+          })}
         </ul>
       </section>
       <footer>
@@ -31,7 +39,7 @@ const Carrito = () => {
         <Button className='bg-success'> PAGAR </Button>
       </footer>
     </div>
-  );
-};
+  )
+}
 
-export default Carrito;
+export default Carrito

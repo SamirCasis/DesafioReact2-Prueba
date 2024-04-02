@@ -1,5 +1,5 @@
 body {
-    background: url('../public/Rebanadapizza.jpg');
+    background: url('/Rebanadapizza.jpg');
     background-size: cover;
     margin: 0;
 }

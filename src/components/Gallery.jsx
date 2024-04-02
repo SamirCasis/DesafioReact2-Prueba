@@ -4,7 +4,7 @@ import { PizzasContext } from '../context/DataPizza'
 import './Gallery.css'
 
 const Gallery = () => {
-    const { pizzas, handleAddToCart, irAlDetalle } = useContext(PizzasContext)
+    const { pizzas, agregarCarrito, irAlDetalle } = useContext(PizzasContext)
 
     return (
         <div className='gallery'>
@@ -25,7 +25,7 @@ const Gallery = () => {
                     <h5 className='text-center'>${pizza.price}</h5>
                     <article className='btnCardPizza'>
                         <Button className='verMas bg-primary white' onClick={() => irAlDetalle(pizza.id)}>Ver Más 👀</Button>
-                        <Button className='agregarCarrito bg-danger white' onClick={() => handleAddToCart(pizza)}> Añadir 🛒</Button>
+                        <Button className='agregarCarrito bg-danger white' onClick={() => agregarCarrito(pizza)}> Añadir 🛒</Button>
                     </article>
                 </div>
             ))}
@@ -34,5 +34,3 @@ const Gallery = () => {
 }
 
 export default Gallery
-
-

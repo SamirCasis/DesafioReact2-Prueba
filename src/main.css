@@ -1,5 +1,19 @@
-.navLink {
+body {
+    background: url('../public/Rebanadapizza.jpg');
+    background-size: cover;
+    margin: 0;
+}
+
+.nav {
+    background-color: blue;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.nav a {
     text-decoration: none;
+    color: white;
+    font-size: large;
 }
 
 .imagenNF {
@@ -13,28 +27,8 @@
 
 .banner {
     text-align: center;
-    background-color: blue;
+    background-color: rgba(0, 0, 0, 0.603);
+    background-position: cover;
     padding: 30px;
-    color: white;
-}
-
-main {
-    margin-top: 20px;
-}
-
-.gallery {
-    display:flex;
-    flex-wrap:wrap;
-    gap: 10px;
-    justify-content: center;
-}
-
-.btnCardPizza {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.imgCardGallery {
-    width: 50%;
+    color: rgb(255, 255, 255);
 }

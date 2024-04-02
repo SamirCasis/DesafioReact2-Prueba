@@ -1,40 +1,30 @@
 import React, { useContext } from 'react'
 import { Button } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom'
 import { PizzasContext } from '../context/DataPizza'
+import './Gallery.css'
 
 const Gallery = () => {
-    const { pizzas, addToCart } = useContext(PizzasContext)
-    const navigate = useNavigate()
-
-    const handleNavigate = () => {
-        navigate(`/pizza`)
-    }
-
-    const handleAddToCart = (pizza) => {
-        addToCart(pizza)
-        alert('Pizza agregada al carrito')
-    }
+    const { pizzas, handleAddToCart, irAlDetalle } = useContext(PizzasContext)
 
     return (
         <div className='gallery'>
-            {pizzas.map((pizza, id) => (
-                <div key={id} className='pizzaCard'>
+            {pizzas.map((pizza) => (
+                <div key={pizza.id} className='pizzaCard'>
                     <img className='imgCardGallery' src={pizza.img} alt={pizza.name}></img>
                     <section>
                         <h3>{pizza.name}</h3>
                     </section>
-                    <section>
+                    <section className='ingredientes'>
                         <h5>Ingredientes:</h5>
-                        <ul>
-                            {pizza.ingredients.map((ingredient, i) => (
-                                <li key={i} type='none'>🍕{ingredient}</li>
+                        <ul className='ulG'>
+                            {pizza.ingredients.map((ingredient, id) => (
+                                <li key={id} type='none'>🍕{ingredient}</li>
                             ))}
                         </ul>
                     </section>
                     <h5 className='text-center'>${pizza.price}</h5>
                     <article className='btnCardPizza'>
-                        <Button className='verMas bg-primary white' onClick={handleNavigate}>Ver Más 👀</Button>
+                        <Button className='verMas bg-primary white' onClick={() => irAlDetalle(pizza.id)}>Ver Más 👀</Button>
                         <Button className='agregarCarrito bg-danger white' onClick={() => handleAddToCart(pizza)}> Añadir 🛒</Button>
                     </article>
                 </div>
@@ -44,3 +34,5 @@ const Gallery = () => {
 }
 
 export default Gallery
+
+

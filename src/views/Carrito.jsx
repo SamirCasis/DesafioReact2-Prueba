@@ -1,13 +1,22 @@
-import React, { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { PizzasContext } from '../context/DataPizza'
 import { Button } from 'react-bootstrap'
 import './Carrito.css'
 
 const Carrito = () => {
-  const { cart, eliminarCarrito, sumaTotal, aumentarPrecio, disminuirPrecio } = useContext(PizzasContext)
+  const { cart, eliminarCarrito, sumaTotal, irAlHome } = useContext(PizzasContext)
+  const [multiplicador, setMultiplicador] = useState(1)
 
-  const getCantidad = (id) => {
-    return cart.filter(pizza => pizza.id === id).length
+  const aumentarMultiplicador = () => {
+    setMultiplicador(prevMultiplicador => prevMultiplicador + 1)
+  }
+
+  const disminuirMultiplicador = (id) => {
+    if (multiplicador === 1) {
+      eliminarCarrito(id)
+    } else {
+      setMultiplicador(prevMultiplicador => prevMultiplicador - 1)
+    }
   }
 
   return (
@@ -19,16 +28,15 @@ const Carrito = () => {
         <ul>
           {[...new Set(cart.map(pizza => pizza.id))].map((id) => {
             const pizza = cart.find(p => p.id === id)
-            const cantidad = getCantidad(id)
 
             return (
               <li key={id} type='none'>
                 <img src={pizza.img} alt={pizza.name} />
-                {pizza.name} - ${pizza.price}
-                <button onClick={() => disminuirPrecio(id)}>-</button>
-                <span>Cantidad: {cantidad}</span>
-                <button onClick={() => aumentarPrecio(id)}>+</button>
-                <button onClick={() => eliminarCarrito(id)}>Eliminar Total</button>
+                {pizza.name} - ${pizza.price * multiplicador}
+                <button className='bg-danger text-white' onClick={() => disminuirMultiplicador(id)} disabled={multiplicador === 0}>-</button>
+                <span>Multiplicador: {multiplicador}</span>
+                <button className='bg-primary text-white' onClick={() => aumentarMultiplicador()}>+</button>
+                <button className='bg-warning' onClick={() => eliminarCarrito(id)}>Eliminar Total</button>
               </li>
             )
           })}
@@ -36,7 +44,7 @@ const Carrito = () => {
       </section>
       <footer>
         <h3>Total: ${sumaTotal()}</h3>
-        <Button className='bg-success'> PAGAR </Button>
+        <Button className='bg-success' onClick={irAlHome}> PAGAR </Button>
       </footer>
     </div>
   )

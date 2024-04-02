@@ -1,11 +1,14 @@
-import React, { useContext } from "react"
+import { useContext } from "react"
 import { PizzasContext } from "../context/DataPizza"
 import { useParams } from "react-router-dom"
 import { Button } from "react-bootstrap"
+import "./PizzaCard.css"
 
 const PizzaCard = () => {
-  const { selectedPizza, agregarCarrito } = useContext(PizzasContext)
   const { id } = useParams()
+  const { pizzas, agregarCarrito } = useContext(PizzasContext)
+
+  const selectedPizza = pizzas.find(pizza => pizza.id === id)
 
   if (!selectedPizza) {
     return <div>No se encontró la pizza seleccionada</div>
@@ -13,36 +16,38 @@ const PizzaCard = () => {
 
   return (
     <>
-      <article>
-        <h2>Detalles de la Pizza</h2>
+      <article className='detallesTitle'>
+        <h2>MÁS SOBRE MI 🍕</h2>
       </article>
-      <section>
+      <section className='pizzaDetails'>
+        <img src={selectedPizza.img} alt={selectedPizza.name} />
         <ul>
           <li key={id}>
-            <strong>Nombre: {selectedPizza.name}</strong>,{" "}
-            <strong>Precio:</strong> ${selectedPizza.price}
+            <h2>{selectedPizza.name}</h2>
           </li>
           <li>
-            <strong>Descripción:</strong> {selectedPizza.desc}
+            {selectedPizza.desc}
           </li>
-          <li>
+          <section className='ingredientesDetails'>
             <h4>Ingredientes:</h4>
             <ul>
               {selectedPizza.ingredients?.map((ingredient, id) => (
-                <li key={id}>{ingredient}</li>
+                <li key={id}>🍕{ingredient}</li>
               ))}
             </ul>
-          </li>
+          </section>
+          <h4>Precio: ${selectedPizza.price} </h4>
+          <Button
+            className="agregarCarrito bg-danger white"
+            onClick={() => agregarCarrito(selectedPizza)}
+          >
+            {" "}
+            Añadir 🛒
+          </Button>
         </ul>
       </section>
       <article>
-        <Button
-          className="agregarCarrito bg-danger white"
-          onClick={() => agregarCarrito(selectedPizza)}
-        >
-          {" "}
-          Añadir 🛒
-        </Button>
+
       </article>
     </>
   )

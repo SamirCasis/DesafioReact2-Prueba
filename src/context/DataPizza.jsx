@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
@@ -35,6 +35,19 @@ const PizzasProvider = ({ children }) => {
     navigate(`/pizza/${id}`)
   }
 
+  const irAlHome = () => {
+    Swal.fire({
+      title: '¿Confirmar Pago?',
+      showCancelButton: true,
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate('/')
+      }
+    })
+  }
+
   const agregarCarrito = (pizza) => {
     setCart([...cart, pizza])
     Swal.fire({
@@ -55,33 +68,9 @@ const PizzasProvider = ({ children }) => {
     return cart.reduce((total, pizza) => total + pizza.price, 0)
   }
 
-  const aumentarPrecio = (id) => {
-    const updatedCart = cart.map(pizza => {
-      if (pizza.id === id) {
-        return { ...pizza, price: pizza.price + 1 }
-      }
-      return pizza
-    })
-    setCart(updatedCart)
-  }
-
-  const disminuirPrecio = (id) => {
-    const updatedCart = cart.map(pizza => {
-      if (pizza.id === id) {
-        const updatedPrice = pizza.price - 1
-        if (updatedPrice <= 0) {
-          return null
-        } else {
-          return { ...pizza, price: updatedPrice }
-        }
-      }
-      return pizza
-    }).filter(Boolean)
-    setCart(updatedCart)
-  }
 
   return (
-    <PizzasContext.Provider value={{ pizzas, cart, agregarCarrito, eliminarCarrito, aumentarPrecio, disminuirPrecio, sumaTotal, pizzaHandle, irAlDetalle, selectedPizza }}>
+    <PizzasContext.Provider value={{ pizzas, cart, agregarCarrito, eliminarCarrito, sumaTotal, pizzaHandle, irAlDetalle, irAlHome, selectedPizza }}>
       {children}
     </PizzasContext.Provider>
   )

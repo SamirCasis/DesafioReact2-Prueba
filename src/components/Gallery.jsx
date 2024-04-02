@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { Button } from 'react-bootstrap'
 import { PizzasContext } from '../context/DataPizza'
 import './Gallery.css'

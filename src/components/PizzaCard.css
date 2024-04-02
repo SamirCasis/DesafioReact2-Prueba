@@ -1,0 +1,36 @@
+.detallesTitle {
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.603);
+    padding: 30px;
+    color: rgb(255, 255, 255);
+}
+
+.pizzaDetails {
+    margin: 20px ;
+    display: flex;
+    border: solid rgba(3, 3, 3, 0.441) 10px;
+}
+
+.pizzaDetails ul {
+    margin: 0px;
+    padding: 10px;
+    background-color: rgba(238, 236, 191, 0.842);
+}
+
+.pizzaDetails img {
+    width: 50%;
+}
+
+.ingredientesDetails {
+    margin-top: 10px;
+}
+
+.ingredientesDetails ul {
+    background-color: rgba(253, 252, 194, 0);
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.pizzaDetails h4 {
+    margin-top: 10px;
+}
